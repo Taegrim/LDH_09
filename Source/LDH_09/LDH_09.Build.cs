@@ -7,14 +7,14 @@ public class LDH_09 : ModuleRules
 	public LDH_09(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
+
 		PublicDependencyModuleNames.AddRange(new string[]
 		{
 			// Default
 			"Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput",
-			
+
 			// UI
-			"UMG",
+			"UMG", "Slate", "SlateCore", 
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
@@ -26,7 +26,7 @@ public class LDH_09 : ModuleRules
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
-		
+
 		// Uncomment if you are using online features
 		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
 
