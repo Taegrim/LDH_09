@@ -1,31 +1,31 @@
-#include "UI/ChatInput.h"
+#include "UI/NumberBaseballInput.h"
 
 #include "Components/EditableTextBox.h"
-#include "Controller/ChatPlayerController.h"
+#include "Controller/NumberBaseballPlayerController.h"
 
-void UChatInput::NativeConstruct()
+void UNumberBaseballInput::NativeConstruct()
 {
     Super::NativeConstruct();
 
-    if (!ChatInputTextBox->OnTextCommitted.IsAlreadyBound(this, &UChatInput::OnChatInputTextCommitted))
+    if (!ChatInputTextBox->OnTextCommitted.IsAlreadyBound(this, &UNumberBaseballInput::OnChatInputTextCommitted))
     {
-        ChatInputTextBox->OnTextCommitted.AddDynamic(this, &UChatInput::OnChatInputTextCommitted);
+        ChatInputTextBox->OnTextCommitted.AddDynamic(this, &UNumberBaseballInput::OnChatInputTextCommitted);
     }
 
     SetFocusChatInput();
 }
 
-void UChatInput::NativeDestruct()
+void UNumberBaseballInput::NativeDestruct()
 {
-    if (ChatInputTextBox->OnTextCommitted.IsAlreadyBound(this, &UChatInput::OnChatInputTextCommitted))
+    if (ChatInputTextBox->OnTextCommitted.IsAlreadyBound(this, &UNumberBaseballInput::OnChatInputTextCommitted))
     {
-        ChatInputTextBox->OnTextCommitted.RemoveDynamic(this, &UChatInput::OnChatInputTextCommitted);
+        ChatInputTextBox->OnTextCommitted.RemoveDynamic(this, &UNumberBaseballInput::OnChatInputTextCommitted);
     }
 
     Super::NativeDestruct();
 }
 
-void UChatInput::OnChatInputTextCommitted(const FText& Text, ETextCommit::Type CommitMethod)
+void UNumberBaseballInput::OnChatInputTextCommitted(const FText& Text, ETextCommit::Type CommitMethod)
 {
     // 엔터 입력 시
     if (CommitMethod == ETextCommit::OnEnter)
@@ -40,7 +40,7 @@ void UChatInput::OnChatInputTextCommitted(const FText& Text, ETextCommit::Type C
         APlayerController* OwningPlayerController = GetOwningPlayer();
         if (!IsValid(OwningPlayerController)) return;
 
-        AChatPlayerController* ChatPlayerController = Cast<AChatPlayerController>(OwningPlayerController);
+        ANumberBaseballPlayerController* ChatPlayerController = Cast<ANumberBaseballPlayerController>(OwningPlayerController);
         if (!IsValid(ChatPlayerController)) return;
 
         // 플레이어 컨트롤러에 채팅 메세지 저장하기
@@ -53,7 +53,7 @@ void UChatInput::OnChatInputTextCommitted(const FText& Text, ETextCommit::Type C
     }
 }
 
-void UChatInput::SetFocusChatInput()
+void UNumberBaseballInput::SetFocusChatInput()
 {
     if (!IsValid(ChatInputTextBox)) return;
 

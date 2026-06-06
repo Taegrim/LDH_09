@@ -2,13 +2,13 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "ChatInput.generated.h"
+#include "NumberBaseballInput.generated.h"
 
 
 class UEditableTextBox;
 
 UCLASS()
-class LDH_09_API UChatInput : public UUserWidget
+class LDH_09_API UNumberBaseballInput : public UUserWidget
 {
 	GENERATED_BODY()
 
@@ -29,3 +29,4 @@ private:
     // 채팅 텍스트 박스로 포커스 맞추는 함수
     void SetFocusChatInput();
 };
+
