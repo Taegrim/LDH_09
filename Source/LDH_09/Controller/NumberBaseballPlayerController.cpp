@@ -5,6 +5,11 @@
 #include "UI/NumberBaseballInput.h"
 
 
+ANumberBaseballPlayerController::ANumberBaseballPlayerController()
+{
+    bReplicates = true;
+}
+
 void ANumberBaseballPlayerController::BeginPlay()
 {
     Super::BeginPlay();
@@ -22,13 +27,25 @@ void ANumberBaseballPlayerController::BeginPlay()
             ChatInputWidgetInstance->AddToViewport();
         }
     }
+
+    if (IsValid(NotificationWidgetClass))
+    {
+        NotificationWidgetInstance = CreateWidget<UUserWidget>(this, NotificationWidgetClass);
+        if (IsValid(NotificationWidgetInstance))
+        {
+            NotificationWidgetInstance->AddToViewport();
+        }
+    }
 }
 
 void ANumberBaseballPlayerController::SetChatMessage(const FString& Message)
 {
     ChatMessage = Message;
 
-    ServerPrintChatMessage(Message);
+    if (IsLocalController())
+    {
+        ServerPrintChatMessage(Message);
+    }
 }
 
 void ANumberBaseballPlayerController::PrintChatMessage(const FString& Message)
@@ -57,4 +74,16 @@ void ANumberBaseballPlayerController::ServerPrintChatMessage_Implementation(cons
 void ANumberBaseballPlayerController::ClientPrintChatMessage_Implementation(const FString& Message)
 {
     PrintChatMessage(Message);
+}
+
+void ANumberBaseballPlayerController::ClientSetNotificationText_Implementation(const FText& Message)
+{
+    SetNotificationText(Message);
+}
+
+void ANumberBaseballPlayerController::SetNotificationText(const FText& Message)
+{
+    NotificationText = Message;
+
+    OnNotificationTextChanged.Broadcast(NotificationText);
 }

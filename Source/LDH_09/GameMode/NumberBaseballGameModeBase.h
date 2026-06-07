@@ -15,7 +15,9 @@ class LDH_09_API ANumberBaseballGameModeBase : public AGameModeBase
 public:
     ANumberBaseballGameModeBase();
 
-    void PrintChatMessage(ANumberBaseballPlayerController* PlayerController, const FString& Message);
+    void PrintChatMessage(APlayerController* PlayerController, const FString& Message);
+
+    void InitializeGame();
 
     virtual void BeginPlay() override;
 
@@ -31,16 +33,22 @@ private:
     bool IsGuessNumberString(const FString& Message);
 
     // 플레이어가 추측한 숫자와 비밀 숫자가 맞는지 판정하는 함수
-    FString JudgeResult(const FString& GuessString);
+    FString JudgeResult(const FString& GuessString, int32& StrikeCount, int32& BallCount);
 
     // 접속한 모든 플레이어에게 메세지를 전송하는 함수
     void SendMessageAllPlayers(const FString& Message);
 
+    void ResetGame();
+
+    void JudgeGame(APlayerController* ChatPlayerController, int32 StrikeCount);
+
 private:
     FString SecretNumber;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
     int32 NumberCount;
 
     TArray<TObjectPtr<ANumberBaseballPlayerController>> PlayerControllers;
+
+    int32 PlayerIndex;
 };
