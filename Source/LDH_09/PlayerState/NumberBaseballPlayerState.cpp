@@ -18,8 +18,7 @@ void ANumberBaseballPlayerState::InitializeState()
 
 void ANumberBaseballPlayerState::UseTryCount()
 {
-    int32 Count = FMath::Max(RemainTryCount - 1, 0);
-    RemainTryCount = Count;
+    RemainTryCount = FMath::Max(RemainTryCount - 1, 0);
 }
 
 bool ANumberBaseballPlayerState::CanGuess() const

@@ -29,4 +29,5 @@ private:
 
     UPROPERTY(Replicated)
     int32 RemainTryCount;
+
 };

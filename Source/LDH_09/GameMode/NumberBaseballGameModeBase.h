@@ -15,11 +15,9 @@ class LDH_09_API ANumberBaseballGameModeBase : public AGameModeBase
 public:
     ANumberBaseballGameModeBase();
 
-    void PrintChatMessage(APlayerController* PlayerController, const FString& Message);
+    void PrintChatMessage(ANumberBaseballPlayerController* PlayerController, const FString& Message);
 
     void InitializeGame();
-
-    virtual void BeginPlay() override;
 
     virtual void PostLogin(APlayerController* NewPlayer) override;
 
@@ -42,13 +40,30 @@ private:
 
     void JudgeGame(APlayerController* ChatPlayerController, int32 StrikeCount);
 
+    void DecreaseRemainingTime();
+
+    void HandleTurn();
+
+    void HandleResetGame();
+
 private:
     FString SecretNumber;
 
+    // 숫자 야구 개수
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
     int32 NumberCount;
 
     TArray<TObjectPtr<ANumberBaseballPlayerController>> PlayerControllers;
 
+    // 로그인 시 부여할 플레이어 번호
     int32 PlayerIndex;
+
+    FTimerHandle RemainingTimerHandle;
+
+    // 현재 턴을 가진 플레이어 인덱스 번호
+    int32 CurrentTurnIndex;
+
+    FTimerHandle ResetTimerHandle;
+
+    bool bRoundStarted;
 };
